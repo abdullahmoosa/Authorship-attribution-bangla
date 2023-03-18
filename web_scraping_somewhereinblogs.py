@@ -21,39 +21,25 @@ base_url = "https://www.somewhereinblog.net/live/"
 page_no = 15
 
 def get_page_url(no):
-  """
-  It takes a page number as an argument, and returns a tuple of the HTTP status code and the HTML of
-  the page
-  
-  :param no: the page number
-  :return: success and get_html
-  """
-  page_url = base_url + str(no)
-  # print(page_url)
-  success = requests.get(page_url).status_code
-  get_html = requests.get(page_url).text
-  return success, get_html
+    page_url = base_url + str(no)
+    # print(page_url)
+    success = requests.get(page_url).status_code
+    get_html = requests.get(page_url).text
+    return success, get_html
 
 success_code, page_html = get_page_url(page_no)
 
 def get_stories_link(page):
-  """
-  It takes the HTML of a page as an argument, and returns a list of links to the stories on that page.
-  
-  :param page: the html of the page we're scraping
-  """
-  soup = BeautifulSoup(page_html, 'lxml')
-  stories_link_div = soup.find_all('div', class_= 'blog-content')
-  for div in stories_link_div:
-      stories_link.append(blog_base_url + div.a.get('href'))
+    soup = BeautifulSoup(page, 'lxml')
+    stories_link_div = soup.find_all('div', class_= 'blog-content')
+    for div in stories_link_div:
+        stories_link.append(blog_base_url + div.a.get('href'))
 
 # success_code, page_html = get_page_url(705090)
 # print(success_code)
 
 page_no = 15
 stories_link = []
-# Scraping the links of the stories from the website.
-# It's an infinite loop.
 while(1):
   success_code, page_html = get_page_url(page_no)
   if success_code != 200:
@@ -65,11 +51,18 @@ while(1):
   # wait_time = random.uniform(1,4)
   # time.sleep(1)
 
-# stories_link[-1]
+stories_link[-1]
 
-# stories_link = stories_link[0:-50]
+# story_texts = []
+# authors = []
 
-# It's scraping the stories and the authors from the links.
+# len(stories_link)
+stories_link = stories_link[0:-50]
+
+# len(stories_link2)
+
+# get_stories_link(page_html)
+# print(len(stories_link))
 story_texts = []
 authors = []
 for link in stories_link:
@@ -92,8 +85,12 @@ for link in stories_link:
     # print(writer)
     # break
 
+len(authors)
 
-# It's creating a dataframe from the lists of authors and story texts.
+len(story_texts)
+
+story_texts[0:100]
+
 df = pd.DataFrame({'Author' : authors, 'Texts' : story_texts})
 
 df_drop_na = df.dropna()
