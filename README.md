@@ -1,4 +1,4 @@
-# Web-scraping-blogs
+# Authorship-attribution-Bangla
 I used python to scrape the author name and story texts from a blog called "Somewhereinblog". It is intended for research purpose
 
 Used Beautifulsoup.
